@@ -154,6 +154,8 @@ body {
 .hero-photo-img { position:relative; z-index:1; width:100%; height:100%; object-fit:cover; object-position:top center; display:block; border-radius:20px 20px 0 0; filter:brightness(1.0) contrast(1.02) saturate(0.95); -webkit-mask-image:linear-gradient(to bottom,black 0%,black 50%,rgba(0,0,0,0.6) 75%,transparent 100%); mask-image:linear-gradient(to bottom,black 0%,black 50%,rgba(0,0,0,0.6) 75%,transparent 100%); }
 .hero-photo-frame { position:absolute; z-index:2; bottom:0;left:50%;transform:translateX(-50%); width:calc(100% - 20px); height:3px; background:linear-gradient(90deg,transparent,var(--teal),transparent); border-radius:4px; }
 .photo-badge { position:absolute; z-index:3; bottom:28px; right:-10px; background:rgba(12,17,25,0.9); border:1px solid rgba(0,194,168,.3); border-radius:12px; padding:10px 14px; backdrop-filter:blur(12px); animation:cardFloat 5s ease-in-out infinite; }
+.hero-photo-name { text-align:center; margin-top:12px; font-family:'Cormorant Garamond',serif; font-size:clamp(17px,2.2vw,22px); font-weight:700; color:var(--white); letter-spacing:.5px; display:block; }
+.hero-photo-name span { color:var(--teal); font-style:italic; font-weight:400; font-size:.8em; display:block; margin-top:2px; letter-spacing:1px; font-family:'Outfit',sans-serif; font-size:11px; text-transform:uppercase; }
 @keyframes cardFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
 .photo-badge-val { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:700; color:var(--teal); line-height:1; }
 .photo-badge-label { font-size:10px; color:var(--grey); margin-top:2px; }
@@ -408,14 +410,14 @@ body {
   .hero-photo-col { grid-column:1; grid-row:2; }
   .hero-photo-wrap {
     display: flex !important;
-    height: clamp(280px,70vw,460px);
+    height: clamp(340px,82vw,520px);
     width: 100%;
     margin-top: 32px;
     justify-content: center;
   }
   .hero-photo-img { width:auto !important; max-width:100%; height:100%; }
   .photo-badge { right:8px; bottom:16px; }
-  .hero-btns { gap:10px; }
+  .hero-btns { gap:10px; justify-content:center; }
 
   /* Services full width on small tablet */
   .services-grid { grid-template-columns:1fr; }
@@ -477,7 +479,7 @@ body {
 
   /* Hero */
   .hero-eyebrow { font-size:10px; letter-spacing:2px; gap:7px; }
-  .hero-photo-wrap { height:clamp(240px,65vw,380px); margin-top:24px; }
+  .hero-photo-wrap { height:clamp(300px,78vw,440px); margin-top:24px; }
   .photo-badge { right:4px; bottom:10px; padding:8px 10px; }
   .photo-badge-val { font-size:18px; }
   .photo-badge-label { font-size:9px; }
@@ -980,6 +982,10 @@ export default function Landing() {
                 <img src="/sebi-small.png" alt="SEBI" style={{height:"28px",width:"auto",objectFit:"contain",display:"block",marginBottom:"4px",background:"#fff",borderRadius:"4px",padding:"2px 4px"}} />
                 <div className="photo-badge-label">Reg. No: INH000020129</div>
               </div>
+            </div>
+            <div className="hero-photo-name">
+              Prachi Sharma
+              <span>Research Analyst</span>
             </div>
           </div>
         </div>
