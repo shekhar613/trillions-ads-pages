@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block build artifacts and source
+Disallow: /src/
+Disallow: /.vite/
+Disallow: /node_modules/
+
+# Sitemap
+Sitemap: https://www.trillionstockresearch.com/sitemap.xml
