@@ -37,6 +37,7 @@ body {
   color: var(--white);
   font-family: 'Outfit', sans-serif;
   overflow-x: hidden;
+  padding-bottom: 72px;
 }
 
 ::-webkit-scrollbar { width: 3px; }
@@ -259,12 +260,87 @@ body {
 .footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-top:20px; border-top:1px solid rgba(255,255,255,.04); }
 .footer-bottom p { font-size:12px; color:var(--grey2); }
 
-/* ── WHATSAPP ── */
-.wa-float { position:fixed; bottom:28px; right:28px; z-index:300; width:54px; height:54px; border-radius:50%; background:linear-gradient(135deg,#25D366,#128C7E); display:flex; align-items:center; justify-content:center; font-size:26px; text-decoration:none; box-shadow:0 6px 24px rgba(37,211,102,.5); animation:waBounce 2s ease-in-out infinite; transition:transform .2s,box-shadow .2s; }
-.wa-float:hover { transform:scale(1.1) !important; box-shadow:0 8px 32px rgba(37,211,102,.7); animation:none; }
-@keyframes waBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
-.wa-tooltip { position:absolute; right:64px; top:50%; transform:translateY(-50%); background:rgba(12,17,25,.95); color:var(--white); font-size:12px; white-space:nowrap; padding:6px 12px; border-radius:6px; opacity:0; pointer-events:none; transition:opacity .2s; border:1px solid rgba(0,194,168,.2); }
-.wa-float:hover .wa-tooltip { opacity:1; }
+/* ── REGISTER MODAL ── */
+.reg-overlay { position:fixed; inset:0; z-index:1000; background:rgba(6,10,16,0.75); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; padding:16px; opacity:0; pointer-events:none; transition:opacity .25s ease; }
+.reg-overlay.open { opacity:1; pointer-events:all; }
+.reg-modal { position:relative; width:100%; max-width:480px; background:linear-gradient(145deg,#0f1a2e,#0C1119); border:1px solid rgba(37,99,235,.25); border-radius:20px; padding:clamp(28px,5vw,44px); box-shadow:0 32px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.04); transform:scale(0.88) translateY(24px); transition:transform .32s cubic-bezier(.34,1.56,.64,1), opacity .25s ease; opacity:0; }
+.reg-overlay.open .reg-modal { transform:scale(1) translateY(0); opacity:1; }
+.reg-modal-close { position:absolute; top:16px; right:16px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color:rgba(255,255,255,.6); width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; line-height:1; transition:all .2s; }
+.reg-modal-close:hover { background:rgba(255,255,255,.12); color:#fff; }
+.reg-modal-badge { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:#60A5FA; background:rgba(37,99,235,.12); border:1px solid rgba(37,99,235,.3); padding:4px 12px; border-radius:999px; margin-bottom:14px; }
+.reg-modal-h { font-family:'Cormorant Garamond',serif; font-size:clamp(22px,3.5vw,30px); font-weight:700; color:#fff; line-height:1.2; margin-bottom:6px; }
+.reg-modal-h span { color:#60A5FA; }
+.reg-modal-sub { font-size:13px; color:var(--grey); margin-bottom:26px; line-height:1.6; font-weight:300; }
+.reg-field { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
+.reg-field label { font-size:12px; font-weight:600; color:rgba(255,255,255,.65); letter-spacing:0.5px; text-transform:uppercase; }
+.reg-field input { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:10px; padding:13px 16px; color:#fff; font-family:'Outfit',sans-serif; font-size:14px; font-weight:400; outline:none; transition:border-color .2s, box-shadow .2s; width:100%; }
+.reg-field input::placeholder { color:rgba(255,255,255,.25); }
+.reg-field input:focus { border-color:rgba(37,99,235,.6); box-shadow:0 0 0 3px rgba(37,99,235,.15); }
+.reg-field input.error { border-color:rgba(255,77,109,.6); }
+.reg-field .field-err { font-size:11px; color:#FF4D6D; margin-top:2px; }
+.reg-api-error { background:rgba(255,77,109,.1); border:1px solid rgba(255,77,109,.3); border-radius:8px; padding:10px 14px; font-size:13px; color:#FF4D6D; margin-bottom:12px; line-height:1.5; }
+.reg-submit { width:100%; margin-top:8px; padding:15px; border-radius:999px; background:linear-gradient(135deg,#2563EB,#3B82F6); color:#fff; font-family:'Outfit',sans-serif; font-size:15px; font-weight:700; border:none; cursor:pointer; letter-spacing:0.3px; transition:all .2s; box-shadow:0 6px 24px rgba(37,99,235,.4); }
+.reg-submit:hover:not(:disabled) { background:linear-gradient(135deg,#1D4ED8,#2563EB); transform:translateY(-1px); box-shadow:0 10px 32px rgba(37,99,235,.55); }
+.reg-submit:disabled { opacity:.6; cursor:not-allowed; }
+.reg-modal-perks { display:flex; gap:16px; flex-wrap:wrap; margin-top:18px; padding-top:16px; border-top:1px solid rgba(255,255,255,.05); }
+.reg-modal-perk { display:flex; align-items:center; gap:5px; font-size:11px; color:rgba(255,255,255,.5); }
+.reg-modal-perk span { color:#34D399; font-size:12px; }
+.reg-success { display:flex; flex-direction:column; align-items:center; text-align:center; gap:0; animation:successIn .45s cubic-bezier(.34,1.56,.64,1) both; }
+@keyframes successIn { from { opacity:0; transform:scale(0.85) translateY(16px); } to { opacity:1; transform:none; } }
+.reg-success-confetti { font-size:48px; line-height:1; animation:confettiBounce 0.6s cubic-bezier(.34,1.8,.64,1) both; margin-bottom:6px; }
+@keyframes confettiBounce { from { transform:scale(0) rotate(-20deg); } to { transform:scale(1) rotate(0deg); } }
+.reg-success-congrats { font-size:11px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:#34D399; background:rgba(52,211,153,.1); border:1px solid rgba(52,211,153,.25); padding:4px 14px; border-radius:999px; margin-bottom:14px; animation:fadeUp .4s .15s both ease-out; }
+.reg-success-h { font-family:'Cormorant Garamond',serif; font-size:clamp(24px,4vw,32px); font-weight:700; color:#fff; line-height:1.2; margin-bottom:8px; animation:fadeUp .4s .2s both ease-out; }
+.reg-success-h span { color:#60A5FA; }
+.reg-success-sub { font-size:13px; color:var(--grey); line-height:1.7; font-weight:300; max-width:340px; margin-bottom:22px; animation:fadeUp .4s .25s both ease-out; }
+.reg-success-sub strong { color:#fff; }
+.reg-success-divider { width:100%; height:1px; background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent); margin-bottom:22px; animation:fadeUp .4s .28s both ease-out; }
+.reg-wa-label { font-size:12px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; color:rgba(255,255,255,.45); margin-bottom:12px; animation:fadeUp .4s .3s both ease-out; }
+.reg-wa-btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:15px 24px; border-radius:14px; background:linear-gradient(135deg,#25D366,#128C7E); color:#fff; font-family:'Outfit',sans-serif; font-size:16px; font-weight:700; text-decoration:none; letter-spacing:0.3px; transition:all .2s; box-shadow:0 8px 28px rgba(37,211,102,.35); animation:fadeUp .45s .35s both ease-out; margin-bottom:12px; }
+.reg-wa-btn:hover { transform:translateY(-2px); box-shadow:0 12px 36px rgba(37,211,102,.5); }
+.reg-wa-icon { font-size:22px; flex-shrink:0; }
+.reg-wa-text { display:flex; flex-direction:column; align-items:flex-start; }
+.reg-wa-text-main { font-size:15px; font-weight:700; line-height:1; }
+.reg-wa-text-sub { font-size:11px; font-weight:400; opacity:0.8; margin-top:2px; }
+.reg-wa-note { font-size:11px; color:rgba(255,255,255,.35); animation:fadeUp .4s .4s both ease-out; margin-bottom:16px; }
+.reg-success-close { font-size:12px; color:rgba(255,255,255,.3); background:none; border:none; cursor:pointer; font-family:'Outfit',sans-serif; padding:4px; transition:color .2s; animation:fadeUp .4s .45s both ease-out; }
+.reg-success-close:hover { color:rgba(255,255,255,.6); }
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+
+/* ── REGISTER BUTTON VARIANTS ── */
+.nav-btn-register { background:#2563EB !important; color:#fff !important; border-radius:999px !important; }
+.nav-btn-register:hover { background:#1D4ED8 !important; box-shadow:0 0 22px rgba(37,99,235,.45) !important; }
+
+.btn-register { display:inline-flex; align-items:center; gap:8px; font-size:15px; font-weight:700; color:#fff; background:linear-gradient(135deg,#2563EB,#3B82F6); padding:15px clamp(22px,3vw,36px); border-radius:999px; text-decoration:none; transition:all .25s; box-shadow:0 6px 28px rgba(37,99,235,.45); white-space:nowrap; letter-spacing:0.2px; }
+.btn-register:hover { transform:translateY(-2px); box-shadow:0 10px 40px rgba(37,99,235,.6); background:linear-gradient(135deg,#1D4ED8,#2563EB); }
+
+.hero-register-note { font-size:12px; color:var(--grey); margin-top:10px; font-weight:400; letter-spacing:0.2px; }
+
+/* ── REGISTER STRIP (after testimonials) ── */
+.reg-strip { background:linear-gradient(135deg,rgba(37,99,235,.15) 0%,rgba(37,99,235,.05) 100%); border-top:1px solid rgba(37,99,235,.2); border-bottom:1px solid rgba(37,99,235,.2); padding:clamp(40px,6vw,70px) clamp(16px,5vw,60px); display:flex; flex-direction:column; align-items:center; text-align:center; gap:20px; }
+.reg-strip-badge { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:#60A5FA; background:rgba(37,99,235,.12); border:1px solid rgba(37,99,235,.25); padding:5px 14px; border-radius:999px; }
+.reg-strip-h { font-family:'Cormorant Garamond',serif; font-size:clamp(26px,4vw,46px); font-weight:700; line-height:1.15; color:var(--white); max-width:640px; }
+.reg-strip-h span { color:#60A5FA; }
+.reg-strip-sub { font-size:clamp(13px,1.4vw,15px); color:var(--grey); max-width:480px; line-height:1.7; font-weight:300; }
+.reg-strip-perks { display:flex; gap:clamp(16px,3vw,32px); flex-wrap:wrap; justify-content:center; margin-top:4px; }
+.reg-strip-perk { display:flex; align-items:center; gap:7px; font-size:13px; color:rgba(255,255,255,.75); font-weight:400; }
+.reg-strip-perk span { color:#34D399; font-size:15px; }
+@media (max-width:600px) {
+  .reg-strip-perks { gap:12px; }
+  .reg-strip-perk { font-size:12px; }
+}
+
+/* ── OFFER STICKY BAR ── */
+.offer-bar { position:fixed; bottom:0; left:0; right:0; z-index:400; width:100%; background:rgba(255,255,255,0.12); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border-top:1px solid rgba(255,255,255,0.18); display:flex; align-items:center; justify-content:space-between; padding:12px clamp(16px,4vw,48px); box-shadow:0 -4px 32px rgba(0,0,0,.25); gap:clamp(10px,2vw,24px); flex-wrap:wrap; }
+.offer-bar-left { display:flex; flex-direction:column; gap:4px; flex-shrink:0; }
+.offer-price { font-family:'Outfit',sans-serif; font-size:clamp(14px,2vw,18px); font-weight:800; color:#fff; line-height:1; letter-spacing:0.2px; }
+.offer-price span { color:rgba(255,255,255,0.75); text-decoration:line-through; text-decoration-color:rgba(255,80,80,0.9); text-decoration-thickness:2px; font-weight:700; }
+.offer-timer { display:flex; align-items:center; gap:5px; font-family:'Outfit',sans-serif; font-size:clamp(11px,1.4vw,13px); color:rgba(255,255,255,0.85); font-weight:500; white-space:nowrap; flex-wrap:wrap; }
+.timer-block { background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.3); color:#fff; font-weight:700; font-size:clamp(12px,1.4vw,14px); padding:2px 8px; border-radius:5px; min-width:28px; text-align:center; letter-spacing:0.5px; }
+.timer-label { color:rgba(255,255,255,0.65); font-size:clamp(10px,1.2vw,12px); font-weight:400; }
+.offer-bar-mid { flex:1; text-align:center; font-family:'Outfit',sans-serif; font-size:clamp(13px,1.6vw,17px); font-weight:700; color:#fff; overflow:hidden; text-overflow:ellipsis; padding:0 clamp(8px,1.5vw,20px); white-space:nowrap; }
+.offer-btn { flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; padding:0 clamp(18px,3vw,32px); height:clamp(38px,5.5vw,46px); border-radius:999px; background:#2563EB; color:#fff; font-family:'Outfit',sans-serif; font-size:clamp(13px,1.5vw,15px); font-weight:600; text-decoration:none; letter-spacing:0.3px; transition:background .2s, transform .15s, box-shadow .2s; white-space:nowrap; box-shadow:0 4px 18px rgba(37,99,235,.5); }
+.offer-btn:hover { background:#1D4ED8; transform:translateY(-2px); box-shadow:0 8px 28px rgba(37,99,235,.65); }
 
 /* ── RESPONSIVE ── */
 @media (max-width:1100px) {
@@ -300,7 +376,8 @@ body {
   .services-grid { grid-template-columns:1fr; }
   .testi-grid { grid-template-columns:1fr; }
   .footer-top { grid-template-columns:1fr; gap:28px; }
-  .wa-float { bottom:20px; right:20px; width:48px; height:48px; font-size:22px; }
+  .offer-bar-mid { display:none; }
+  .offer-bar { flex-wrap:nowrap; justify-content:space-between; }
 }
 @media (prefers-reduced-motion:reduce) {
   *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
@@ -492,13 +569,147 @@ function BarChart() {
 }
 
 /* ═══════════════════════════════════════════════
+   REGISTER MODAL COMPONENT
+═══════════════════════════════════════════════ */
+function RegisterModal({ open, onClose }) {
+  const [form, setForm] = useState({ name:"", mobile:"", email:"" });
+  const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [apiError, setApiError] = useState("");
+
+  useEffect(() => {
+    if (open) { setForm({ name:"", mobile:"", email:"" }); setErrors({}); setSuccess(false); setApiError(""); }
+  }, [open]);
+
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    if (open) window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  const validate = () => {
+    const e = {};
+    if (!form.name.trim()) e.name = "Name is required";
+    if (!/^[6-9]\d{9}$/.test(form.mobile.trim())) e.mobile = "Enter a valid 10-digit mobile number";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) e.email = "Enter a valid email address";
+    return e;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const errs = validate();
+    if (Object.keys(errs).length) { setErrors(errs); return; }
+    setSubmitting(true);
+    setApiError("");
+    try {
+      const res = await fetch("https://tsresearch.in/ads-registration/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: form.name.trim(), mobileNumber: form.mobile.trim(), email: form.email.trim() }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data?.message || `Server error (${res.status})`);
+      }
+      setSuccess(true);
+    } catch (err) {
+      setApiError(err.message || "Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className={`reg-overlay${open ? " open" : ""}`} onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+      <div className="reg-modal" role="dialog" aria-modal="true" aria-label="Register Form">
+        <button className="reg-modal-close" onClick={onClose} aria-label="Close">✕</button>
+        {!success ? (
+          <>
+            <div className="reg-modal-badge">🎁 Free Registration</div>
+            <h2 className="reg-modal-h">Join <span>Trillion Stock</span><br />Research — FREE</h2>
+            <p className="reg-modal-sub">Get expert stock tips, portfolio review & market insights directly from SEBI-registered analysts.</p>
+            <form onSubmit={handleSubmit} noValidate>
+              <div className="reg-field">
+                <label htmlFor="reg-name">Full Name</label>
+                <input id="reg-name" type="text" placeholder="e.g. Rahul Sharma" value={form.name} onChange={e => setForm(f => ({...f, name:e.target.value}))} className={errors.name ? "error" : ""} />
+                {errors.name && <span className="field-err">{errors.name}</span>}
+              </div>
+              <div className="reg-field">
+                <label htmlFor="reg-mobile">Mobile Number</label>
+                <input id="reg-mobile" type="tel" placeholder="e.g. 9876543210" maxLength={10} value={form.mobile} onChange={e => setForm(f => ({...f, mobile:e.target.value.replace(/\D/,"")}))} className={errors.mobile ? "error" : ""} />
+                {errors.mobile && <span className="field-err">{errors.mobile}</span>}
+              </div>
+              <div className="reg-field">
+                <label htmlFor="reg-email">Email Address</label>
+                <input id="reg-email" type="email" placeholder="e.g. rahul@gmail.com" value={form.email} onChange={e => setForm(f => ({...f, email:e.target.value}))} className={errors.email ? "error" : ""} />
+                {errors.email && <span className="field-err">{errors.email}</span>}
+              </div>
+              {apiError && (
+                <div className="reg-api-error">⚠ {apiError}</div>
+              )}
+              <button type="submit" className="reg-submit" disabled={submitting}>
+                {submitting ? "Submitting..." : "Register Now — It's FREE →"}
+              </button>
+            </form>
+            <div className="reg-modal-perks">
+              {[["✓","No Credit Card"],["✓","SEBI Registered"],["✓","Instant Access"],["🔒","100% Secure"]].map(([icon,text]) => (
+                <div className="reg-modal-perk" key={text}><span>{icon}</span>{text}</div>
+              ))}
+            </div>
+          </>
+        ) : (
+          <div className="reg-success">
+            <div className="reg-success-confetti">🎉</div>
+            <div className="reg-success-congrats">🏆 Congratulations!</div>
+            <h2 className="reg-success-h">Welcome, <span>{form.name.split(" ")[0]}</span>!<br />You're All Set.</h2>
+            <p className="reg-success-sub">
+              Your registration is confirmed! Our SEBI-registered experts will reach out on <strong>{form.mobile}</strong>.<br />
+              Meanwhile, join our exclusive WhatsApp group for <strong>live stock tips &amp; market alerts</strong>.
+            </p>
+            <div className="reg-success-divider" />
+            <div className="reg-wa-label">Next Step — Join the Community</div>
+            <a
+              href="https://wa.me/919669892312?text=Hi%2C%20I%20just%20registered%20on%20Trillion%20Stock%20Research.%20Please%20add%20me%20to%20the%20group."
+              className="reg-wa-btn"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="reg-wa-icon">💬</span>
+              <div className="reg-wa-text">
+                <span className="reg-wa-text-main">Join WhatsApp Group Now</span>
+                <span className="reg-wa-text-sub">Free · Instant Access · Live Tips</span>
+              </div>
+            </a>
+            <p className="reg-wa-note">📲 Tap above to open WhatsApp · +91 96698 92312</p>
+            <button className="reg-success-close" onClick={onClose}>Skip for now</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════
    MAIN COMPONENT
 ═══════════════════════════════════════════════ */
 export default function Landing() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(15 * 60); // 15 minutes in seconds
+
+  const openModal = (e) => { e.preventDefault(); setModalOpen(true); };
+  const closeModal = () => setModalOpen(false);
 
   useScrollReveal();
   useNavScroll();
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(prev => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Inject CSS once
   useEffect(() => {
@@ -512,10 +723,10 @@ export default function Landing() {
     return () => {};
   }, []);
 
-  // Lock scroll when menu open
+  // Lock scroll when menu or modal open
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-  }, [menuOpen]);
+    document.body.style.overflow = (menuOpen || modalOpen) ? "hidden" : "";
+  }, [menuOpen, modalOpen]);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -534,7 +745,7 @@ export default function Landing() {
         </ul>
         <div className="nav-right">
           <span className="nav-sebi">✓ SEBI Verified</span>
-          <a href="https://www.trillionstockresearch.com" className="nav-btn" target="_blank" rel="noreferrer">Get Started</a>
+          <a href="#" className="nav-btn nav-btn-register" onClick={openModal}>Register Now →</a>
         </div>
         <button className={`hamburger${menuOpen ? " open" : ""}`} onClick={() => setMenuOpen(o => !o)} aria-label="Menu">
           <span /><span /><span />
@@ -546,7 +757,7 @@ export default function Landing() {
         {["services","about","testimonials","contact"].map(h => (
           <a href={`#${h}`} key={h} onClick={closeMenu} style={{ textTransform:"capitalize" }}>{h}</a>
         ))}
-        <a href="https://www.trillionstockresearch.com" className="mob-cta" target="_blank" rel="noreferrer" onClick={closeMenu}>Get Started ↗</a>
+        <a href="#" className="mob-cta" onClick={(e) => { closeMenu(); openModal(e); }} style={{ background:"#2563EB", borderRadius:"999px" }}>Register Now — FREE →</a>
       </div>
 
       {/* ── HERO ── */}
@@ -574,9 +785,10 @@ export default function Landing() {
               SEBI-registered experts ki team jo aapke har investment decision ko research, data aur strategy se power deti hai. Equity, F&amp;O, Portfolio — sab kuch ek jagah.
             </p>
             <div className="hero-btns">
-              <a href="https://www.trillionstockresearch.com" className="btn-primary" target="_blank" rel="noreferrer">Free Consultation Lein ↗</a>
+              <a href="#" className="btn-register" onClick={openModal}>Register Now — It's FREE →</a>
               <a href="#services" className="btn-outline">Services Dekhein</a>
             </div>
+            <p className="hero-register-note">🔒 No credit card · SEBI Registered · Free forever</p>
             <div className="trust-row">
               {[["🏛","SEBI Registered"],["📊","Research-Backed"],["🛡","Transparent"],["👥","5,000+ Clients"]].map(([icon,label]) => (
                 <div className="trust-badge" key={label}>
@@ -686,6 +898,20 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── REGISTER STRIP ── */}
+      <section className="reg-strip">
+        <div className="reg-strip-badge">🎁 Limited Time — Free Access</div>
+        <h2 className="reg-strip-h reveal">5,000+ Investors Already Joined.<br /><span>Will You Be Next?</span></h2>
+        <p className="reg-strip-sub reveal">Join Indore's most trusted SEBI-registered advisory today. Get expert stock recommendations, portfolio review, and market insights — completely free.</p>
+        <div className="reg-strip-perks reveal">
+          {[["✓","No Credit Card Required"],["✓","SEBI Registered & Safe"],["✓","Instant Access"],["✓","Cancel Anytime"]].map(([icon,text]) => (
+            <div className="reg-strip-perk" key={text}><span>{icon}</span>{text}</div>
+          ))}
+        </div>
+        <a href="#" className="btn-register reveal" onClick={openModal}>Register Now — FREE →</a>
+        <p className="hero-register-note">Offer ends in {String(Math.floor(timeLeft / 60)).padStart(2,"0")}:{String(timeLeft % 60).padStart(2,"0")} · Don't miss out</p>
+      </section>
+
       {/* ── CTA BAND ── */}
       <section id="contact" className="cta-band">
         <div className="reveal-left">
@@ -693,7 +919,7 @@ export default function Landing() {
           <p className="cta-p">Free consultation ke liye abhi connect karein — SEBI registered experts se seedha baat karein aur apni investment journey sahi direction mein shuru karein.</p>
         </div>
         <div className="cta-right reveal-right">
-          <a href="https://www.trillionstockresearch.com" className="btn-primary" target="_blank" rel="noreferrer">Free Consultation Book Karein ↗</a>
+          <a href="#" className="btn-register" onClick={openModal}>Register Now — It's FREE →</a>
           <a href="https://www.trillionstockresearch.com" className="btn-outline" target="_blank" rel="noreferrer">Website Visit Karein</a>
           <p className="cta-note">SEBI Reg. No: INH000020129 · Indore, MP</p>
         </div>
@@ -736,17 +962,27 @@ export default function Landing() {
         </div>
       </footer>
 
-      {/* ── WHATSAPP FLOAT ── */}
-      <a
-        href="https://wa.me/91XXXXXXXXXX"  /* 👈 Apna WhatsApp number yahan daalo */
-        className="wa-float"
-        target="_blank"
-        rel="noreferrer"
-        aria-label="WhatsApp"
-      >
-        💬
-        <span className="wa-tooltip">Chat on WhatsApp</span>
-      </a>
+      {/* ── OFFER STICKY BAR ── */}
+      <div className="offer-bar">
+        <div className="offer-bar-left">
+          <div className="offer-price">FREE <span>₹199/-</span></div>
+          <div className="offer-timer">
+            Offer Ends In..&nbsp;
+            <span className="timer-block">{String(Math.floor(timeLeft / 60)).padStart(2,"0")}</span>
+            <span className="timer-label">Minutes</span>
+            <span className="timer-block">{String(timeLeft % 60).padStart(2,"0")}</span>
+            <span className="timer-label">Seconds</span>
+          </div>
+        </div>
+        <div className="offer-bar-mid">
+          If They Prospered Yearly, So Can You
+        </div>
+        <a href="#" className="offer-btn" onClick={openModal}>
+          Register Now
+        </a>
+      </div>
+
+      <RegisterModal open={modalOpen} onClose={closeModal} />
     </>
   );
 }
