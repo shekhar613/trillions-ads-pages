@@ -750,7 +750,7 @@ function RegisterModal({ open, onClose }) {
     setSubmitting(true);
     setApiError("");
     try {
-      const res = await fetch("https://tsresearch.in/ads-registration/register", {
+      const res = await fetch("https://tstock.trillionstechsolutions.com/ads-registration/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: form.name.trim(), mobileNumber: form.mobile.trim(), email: form.email.trim() }),
