@@ -557,6 +557,12 @@ function Glyph({ name, size = 18 }) {
   );
 }
 
+function trackPixel(event, params) {
+  if (typeof window !== "undefined" && typeof window.fbq === "function") {
+    window.fbq("track", event, params);
+  }
+}
+
 /* ═══════════════════════════════════════════════
    HOOKS
 ═══════════════════════════════════════════════ */
@@ -736,6 +742,8 @@ function RegisterModal({ open, onClose }) {
         const data = await res.json().catch(() => ({}));
         throw new Error(data?.message || `Server error (${res.status})`);
       }
+      trackPixel("Lead");
+      trackPixel("CompleteRegistration");
       setSuccess(true);
     } catch (err) {
       setApiError(err.message || "Something went wrong. Please try again.");
@@ -797,6 +805,7 @@ function RegisterModal({ open, onClose }) {
               className="reg-wa-btn"
               target="_blank"
               rel="noreferrer"
+              onClick={() => trackPixel("Contact")}
             >
               <span className="reg-wa-icon">💬</span>
               <div className="reg-wa-text">
