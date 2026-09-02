@@ -27,7 +27,7 @@ const CSS = `
   --nav-h: 72px;
   --serif: 'Newsreader', Georgia, serif;
   --sans: 'DM Sans', system-ui, sans-serif;
-  --max: 1180px;
+  --max: 1280px;
 }
 
 html { scroll-behavior: smooth; overflow-x: clip; max-width:100%; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
@@ -117,8 +117,8 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
 .hero-inner {
   position:relative; z-index:1;
   display:grid;
-  grid-template-columns: 1.15fr .85fr;
-  gap: clamp(28px,5vw,72px);
+  grid-template-columns: 1fr 1.05fr;
+  gap: clamp(24px,4vw,56px);
   align-items: center;
   width:100%; max-width:var(--max); margin:0 auto;
 }
@@ -196,7 +196,7 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
   width:100%; max-width:100%;
 }
 .hero-photo-img {
-  width:100%; height:clamp(420px,62vh,620px); object-fit:cover; object-position:top center;
+  width:100%; height:clamp(520px,78vh,760px); object-fit:cover; object-position:top center;
   display:block; filter:saturate(.92) contrast(1.04);
 }
 .hero-photo-mat { position:absolute; inset:12px 12px 72px; border:1px solid rgba(184,146,74,.35); pointer-events:none; }
@@ -215,7 +215,7 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
 
 /* ── TICKER ── */
 .tsr-ticker { overflow:hidden; background:var(--navy); padding:12px 0; border-top:1px solid rgba(184,146,74,.25); border-bottom:1px solid rgba(184,146,74,.25); }
-.ticker-track { display:flex; width:max-content; animation:ticker 28s linear infinite; }
+.ticker-track { display:flex; width:max-content; animation:ticker 60s linear infinite; }
 .ticker-track:hover { animation-play-state:paused; }
 @keyframes ticker { to{transform:translateX(-50%);} }
 .ticker-item { display:flex; align-items:center; gap:8px; padding:0 28px; font-size:12px; font-weight:500; white-space:nowrap; border-right:1px solid rgba(255,255,255,.08); }
@@ -420,7 +420,7 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
 /* ── RESPONSIVE ── */
 @media (max-width:1200px) {
   .nav-sebi { display:none; }
-  .hero-inner { grid-template-columns: 1.1fr .9fr; gap:28px; }
+  .hero-inner { grid-template-columns: 1fr 1.05fr; gap:24px; }
   .footer-top { grid-template-columns:1fr 1fr; gap:36px; }
   .cta-inner { grid-template-columns:1fr; }
   .cta-right { align-items:flex-start; flex-direction:row; flex-wrap:wrap; }
@@ -435,7 +435,7 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
   .num-block:nth-child(3), .num-block:nth-child(4) { border-top:1px solid var(--line); }
   .num-block:nth-child(4) { border-right:none; }
   .why-grid { grid-template-columns:1fr; gap:36px; }
-  .hero-photo-img { height:clamp(360px,52vw,520px); }
+  .hero-photo-img { height:clamp(440px,64vw,640px); }
 }
 @media (max-width:900px) {
   .tsr-hero { min-height: auto; padding-top: calc(var(--nav-h) + 24px); padding-bottom: 40px; }
@@ -450,7 +450,7 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
   .hero-eyebrow { letter-spacing:1.6px; font-size:10px; }
   .hero-btns { flex-direction:column; align-items:stretch; }
   .hero-btns .btn-register, .hero-btns .btn-outline { width:100%; justify-content:center; }
-  .hero-photo-img { height:clamp(280px,88vw,420px); }
+  .hero-photo-img { height:clamp(360px,96vw,560px); }
   .services-grid, .testi-grid { grid-template-columns:1fr; }
   .services-header { align-items:flex-start; }
   .svc-card, .testi-card { padding:22px 18px; }
@@ -511,7 +511,7 @@ const TICKER_ITEMS = [
 const SERVICES = [
   { num:"01", icon:"chart", title:"Equity Research & Analysis",    desc:"Fundamental and technical analysis of NSE/BSE listed stocks. Data-driven research reports to help you make informed decisions. Investments are subject to market risk.", tag:"Stocks · NSE/BSE" },
   { num:"02", icon:"bolt", title:"Intraday & Positional Research", desc:"Daily research-based analysis with entry, exit and stop-loss levels. These are research recommendations only — no profit is guaranteed.", tag:"Research Only · No Guarantee" },
-  { num:"03", icon:"case", title:"Portfolio Review & Advisory",   desc:"Portfolio analysis based on your stated risk profile. Research-based allocation guidance — all investment decisions remain with the investor.", tag:"Advisory · Risk-Managed" },
+  { num:"03", icon:"case", title:"Portfolio Review & Research Analyst",   desc:"Portfolio analysis based on your stated risk profile. Research-based allocation guidance — all investment decisions remain with the investor.", tag:"Research Analyst · Risk-Managed" },
   { num:"04", icon:"target", title:"F&O Research",         desc:"Research-based analysis for Futures & Options segments. F&O carries very high risk and is suitable only for experienced investors.", tag:"High Risk · Research Only" },
   { num:"05", icon:"file", title:"Market Research Reports",       desc:"Sector reports, earnings analysis and quarterly outlooks. Objective market research to support well-informed investment decisions.", tag:"Sector Reports · Earnings" },
   { num:"06", icon:"scope", title:"Long-term Stock Research",      desc:"Deep fundamental research on value stocks. Past research activity does not guarantee future performance. Investments are subject to market risk.", tag:"Long-term · Fundamental" },
@@ -793,7 +793,7 @@ function RegisterModal({ open, onClose }) {
             <div className="reg-success-divider" />
             <div className="reg-wa-label">Next Step — Join the Community</div>
             <a
-              href="https://wa.me/919669892312?text=Hi%2C%20I%20have%20registered%20on%20Trillion%20Stock%20Research%20(SEBI%20Reg.%20INH000020129).%20Please%20share%20research%20updates."
+              href="https://wa.me/919926909617?text=Hi%2C%20I%20have%20registered%20on%20Trillion%20Stock%20Research%20(SEBI%20Reg.%20INH000020129).%20Please%20share%20research%20updates."
               className="reg-wa-btn"
               target="_blank"
               rel="noreferrer"
@@ -804,7 +804,7 @@ function RegisterModal({ open, onClose }) {
                 <span className="reg-wa-text-sub">Research Reports · Market Analysis · SEBI Compliant</span>
               </div>
             </a>
-            <p className="reg-wa-note">Tap above to open WhatsApp · +91 96698 92312</p>
+            <p className="reg-wa-note">Tap above to open WhatsApp · +91 99269 09617</p>
             <button className="reg-success-close" onClick={onClose}>Skip for now</button>
           </div>
         )}
@@ -879,7 +879,7 @@ export default function Landing() {
           <div className="hero-text-col">
             <div className="hero-eyebrow">
               <span className="eyebrow-dot" />
-              SEBI Registered Financial Advisory
+              SEBI Registered Research Analyst
             </div>
             <h1 className="tsr-h1">
               Trillion Stock
@@ -1048,7 +1048,7 @@ export default function Landing() {
           <div className="reveal">
             <div className="footer-logo-main">Trillion <span>Stock</span> Research</div>
             <div className="footer-logo-sub">SEBI Registered Research Analyst</div>
-            <p className="footer-about">SEBI-registered research analyst firm providing market research, investment analysis and research-backed advisory services for investors.</p>
+            <p className="footer-about">SEBI-registered research analyst firm providing market research, investment analysis and research-backed Research Analyst services for investors.</p>
             <div className="footer-reg"><span style={{background:"#fff",padding:"1px 4px",display:"inline-flex",alignItems:"center"}}><img src="/sebi-small.png" alt="SEBI" style={{height:"13px",width:"auto",objectFit:"contain",display:"block"}} /></span> SEBI Reg. No: INH000020129</div>
             <div className="footer-reg" style={{marginTop:"6px"}}><span style={{background:"#fff",padding:"1px 4px",display:"inline-flex",alignItems:"center"}}><img src="/bselogo.png" alt="BSE" style={{height:"13px",width:"auto",objectFit:"contain",display:"block"}} /></span> BSE Enlistment No: 6528</div>
             <div className="footer-reg" style={{marginTop:"6px",fontSize:"10px"}}><span style={{background:"#fff",padding:"1px 4px",display:"inline-flex",alignItems:"center"}}><img src="/bselogo.png" alt="BSE" style={{height:"12px",width:"auto",objectFit:"contain",display:"block"}} /></span> Ad Approval: BSE/RA/ADVT/05012026-6528/03</div>
@@ -1056,7 +1056,7 @@ export default function Landing() {
           </div>
           <div className="footer-col reveal d1">
             <div className="footer-col-title">Services</div>
-            {["Equity Research","Intraday research","Portfolio Advisory","F&O Advisory","Multibagger Research"].map(s => (
+            {["Equity Research","Intraday research","Portfolio Research Analyst","F&O Research Analyst","Multibagger Research"].map(s => (
               <a key={s} href="https://www.trillionstockresearch.com" target="_blank" rel="noreferrer">{s}</a>
             ))}
           </div>
