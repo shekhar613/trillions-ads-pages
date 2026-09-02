@@ -215,12 +215,10 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
 
 /* ── TICKER ── */
 .tsr-ticker { overflow:hidden; background:var(--navy); padding:12px 0; border-top:1px solid rgba(184,146,74,.25); border-bottom:1px solid rgba(184,146,74,.25); }
-.ticker-track { display:flex; width:max-content; animation:ticker 60s linear infinite; }
-.ticker-track:hover { animation-play-state:paused; }
-@keyframes ticker { to{transform:translateX(-50%);} }
+.ticker-track { display:flex; width:max-content; will-change:transform; backface-visibility:hidden; -webkit-backface-visibility:hidden; transform:translate3d(0,0,0); }
 .ticker-item { display:flex; align-items:center; gap:8px; padding:0 28px; font-size:12px; font-weight:500; white-space:nowrap; border-right:1px solid rgba(255,255,255,.08); }
 .t-name{color:rgba(255,255,255,.45); letter-spacing:.6px;} .t-val{color:#fff;}
-.t-up{color:#7DCEA0;font-size:11px;} .t-dn{color:#E8A0A0;font-size:11px;}
+.t-learn{color:var(--gold-2);font-size:11px;letter-spacing:.3px;}
 
 /* ── NUMBERS ── */
 .numbers-bar {
@@ -487,6 +485,7 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
 }
 @media (prefers-reduced-motion:reduce) {
   *, *::before, *::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  .ticker-track { animation:none !important; transform:none !important; }
 }
 `;
 
@@ -494,34 +493,30 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
    DATA
 ═══════════════════════════════════════════════ */
 const TICKER_ITEMS = [
-  { name: "NIFTY 50",   val: "22,508.75", chg: "+1.23%", up: true },
-  { name: "SENSEX",     val: "74,119.39", chg: "+0.87%", up: true },
-  { name: "BANKNIFTY",  val: "48,290.10", chg: "-0.41%", up: false },
-  { name: "RELIANCE",   val: "2,891.50",  chg: "+2.10%", up: true },
-  { name: "TCS",        val: "4,022.30",  chg: "-0.55%", up: false },
-  { name: "HDFC BANK",  val: "1,649.80",  chg: "+1.67%", up: true },
-  { name: "INFOSYS",    val: "1,782.45",  chg: "+0.92%", up: true },
-  { name: "WIPRO",      val: "448.90",    chg: "-1.02%", up: false },
-  { name: "TATASTEEL",  val: "162.35",    chg: "+3.20%", up: true },
-  { name: "MARUTI",     val: "12,140.00", chg: "+0.43%", up: true },
-  { name: "BAJFINANCE", val: "6,842.55",  chg: "+1.88%", up: true },
-  { name: "ITC",        val: "437.20",    chg: "-0.33%", up: false },
+  { name: "CLARITY",      val: "Learn to read a research note with structure" },
+  { name: "METHOD",       val: "See how analysis is prepared, step by step" },
+  { name: "SKILL",        val: "Study businesses before you decide" },
+  { name: "RESEARCH",     val: "Written notes for learning, not tips" },
+  { name: "RISK SENSE",   val: "Notice why markets can go up or down" },
+  { name: "FUNDAMENTALS", val: "Practise how businesses are studied" },
+  { name: "NO RETURNS",   val: "Education does not guarantee profit" },
+  { name: "SEBI FRAME",   val: "Research under Reg. INH000020129" },
 ];
 
 const SERVICES = [
-  { num:"01", icon:"chart", title:"Equity Research & Analysis",    desc:"Fundamental and technical analysis of NSE/BSE listed stocks. Data-driven research reports to help you make informed decisions. Investments are subject to market risk.", tag:"Stocks · NSE/BSE" },
-  { num:"02", icon:"bolt", title:"Intraday & Positional Research", desc:"Daily research-based analysis with entry, exit and stop-loss levels. These are research recommendations only — no profit is guaranteed.", tag:"Research Only · No Guarantee" },
-  { num:"03", icon:"case", title:"Portfolio Review & Research Analyst",   desc:"Portfolio analysis based on your stated risk profile. Research-based allocation guidance — all investment decisions remain with the investor.", tag:"Research Analyst · Risk-Managed" },
-  { num:"04", icon:"target", title:"F&O Research",         desc:"Research-based analysis for Futures & Options segments. F&O carries very high risk and is suitable only for experienced investors.", tag:"High Risk · Research Only" },
-  { num:"05", icon:"file", title:"Market Research Reports",       desc:"Sector reports, earnings analysis and quarterly outlooks. Objective market research to support well-informed investment decisions.", tag:"Sector Reports · Earnings" },
-  { num:"06", icon:"scope", title:"Long-term Stock Research",      desc:"Deep fundamental research on value stocks. Past research activity does not guarantee future performance. Investments are subject to market risk.", tag:"Long-term · Fundamental" },
+  { num:"01", icon:"chart", title:"Equity Research Learning",    desc:"Learn how NSE/BSE listed companies are studied through fundamental and technical research. The effect is a clearer reading of a stock note — not a buy or sell instruction. Investments are subject to market risk.", tag:"Learning · Stocks" },
+  { num:"02", icon:"bolt", title:"Intraday & Positional Study", desc:"Educational notes that show how short-term and positional analysis is written. You practise following the method. For learning only — not trade calls, and no profit is promised.", tag:"Education · No Guarantee" },
+  { num:"03", icon:"case", title:"Portfolio Study for Learning",   desc:"A classroom-style look at how allocation is discussed in research language against a stated risk profile. Meant to improve understanding — investment decisions remain yours.", tag:"Learning · Risk-aware" },
+  { num:"04", icon:"target", title:"F&O Research Education",         desc:"Learning-focused research on Futures & Options concepts. F&O is high risk. You study why leverage works both ways. This is classroom-style study, not a profit product.", tag:"High Risk · Education Only" },
+  { num:"05", icon:"file", title:"Market Research Study Notes",       desc:"Sector notes, earnings walkthroughs and quarterly study material. The effect is better follow-through of research language — not a forecast of results.", tag:"Study Notes · Earnings" },
+  { num:"06", icon:"scope", title:"Long-term Research Learning",      desc:"Deep fundamental study of businesses over time. You practise valuation thinking as a learner. Past research does not predict future results. Investments are subject to market risk.", tag:"Long-term · Learning" },
 ];
 
 const WHY_ITEMS = [
-  { icon:"bank", title:"SEBI Registered Research Analyst",   desc:"Registration No. INH000020129. We operate under SEBI guidelines. SEBI registration does not guarantee performance or returns." },
-  { icon:"mind", title:"Research-Based Analysis",            desc:"Written research reports based on fundamental and technical analysis. These are recommendations only — the final investment decision is always yours." },
-  { icon:"target", title:"Risk-Profile Based Guidance",        desc:"Research guidance aligned to your stated risk tolerance. Investments in securities are subject to market risks." },
-  { icon:"file", title:"Transparent & Documented",           desc:"All recommendations are provided in written format, compliant with SEBI disclosure norms. No verbal-only advice." },
+  { icon:"bank", title:"SEBI Registered Research Analyst",   desc:"Registration No. INH000020129. We operate under SEBI guidelines. SEBI registration does not guarantee performance, learning outcomes or returns." },
+  { icon:"mind", title:"Research-Based Learning",            desc:"Written reports used as study material. You build a research habit: read the note, understand the method, then decide for yourself. These are not personalised trade instructions." },
+  { icon:"target", title:"Risk-Aware Market Education",        desc:"Notes explain risk in plain language so you learn to notice it, not skip it. Investments in securities are subject to market risks." },
+  { icon:"file", title:"Transparent & Documented",           desc:"All research is provided in written format for study and record, aligned with SEBI disclosure norms. No verbal-only tips." },
 ];
 
 const BARS = [
@@ -533,9 +528,9 @@ const BARS = [
 ];
 
 const TESTIMONIALS = [
-  { stars:"★★★★★", text:'"The research reports are detailed and well-structured. The analysis is easy to understand and helpful when evaluating investment options."', name:"Rahul Sharma", loc:"Madhya Pradesh", av:"R", bg:"#0B1F36", note:"Individual experience. Investment results vary. Investments are subject to market risk." },
-  { stars:"★★★★★", text:'"Being SEBI registered, their approach is professional and transparent. All recommendations are provided in written, documented format."', name:"Priya Verma",  loc:"Bhopal, Madhya Pradesh",  av:"P", bg:"#B8924A", note:"Individual experience. Past research quality does not guarantee future accuracy." },
-  { stars:"★★★★★", text:'"The research methodology is clear — both fundamental and technical aspects are covered. Risk warnings are explicitly mentioned in the F&O section."', name:"Amit Joshi",   loc:"Madhya Pradesh",  av:"A", bg:"#1E4668", note:"Individual experience. Investments are subject to market risks." },
+  { stars:"★★★★★", text:'"The notes trained me to study a stock step by step. I now read research as study material — not as a promise of profit."', name:"Rahul Sharma", loc:"Madhya Pradesh", av:"R", bg:"#0B1F36", note:"Comment on learning quality only. Not a return or income claim. Investments are subject to market risk." },
+  { stars:"★★★★★", text:'"The written format made research easier to follow. It improved how I study markets, without claiming future accuracy."', name:"Priya Verma",  loc:"Bhopal, Madhya Pradesh",  av:"P", bg:"#B8924A", note:"Learner feedback on research clarity. Past research quality does not guarantee future accuracy." },
+  { stars:"★★★★★", text:'"I learned how fundamental and technical ideas are used as study tools. Risk warnings in the F&O notes were stated clearly."', name:"Amit Joshi",   loc:"Madhya Pradesh",  av:"A", bg:"#1E4668", note:"Educational experience only. Investments are subject to market risks." },
 ];
 
 const ICONS = {
@@ -598,59 +593,57 @@ function useBarAnimation() {
   return { ref, animated };
 }
 
-function useCounter(target, duration = 1800) {
-  const [val, setVal] = useState(0);
-  const ref = useRef(null);
-  const started = useRef(false);
-  useEffect(() => {
-    if (!ref.current) return;
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting && !started.current) {
-        started.current = true;
-        let start = null;
-        const step = (ts) => {
-          if (!start) start = ts;
-          const prog = Math.min((ts - start) / duration, 1);
-          const ease = 1 - Math.pow(1 - prog, 3);
-          setVal(Math.floor(ease * target));
-          if (prog < 1) requestAnimationFrame(step);
-          else setVal(target);
-        };
-        requestAnimationFrame(step);
-        obs.disconnect();
-      }
-    }, { threshold: 0.3 });
-    obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, [target, duration]);
-  return { val, ref };
-}
-
 /* ═══════════════════════════════════════════════
    SUB-COMPONENTS
 ═══════════════════════════════════════════════ */
 function Ticker() {
+  const trackRef = useRef(null);
+  const offsetRef = useRef(0);
+  const pausedRef = useRef(false);
   const items = [...TICKER_ITEMS, ...TICKER_ITEMS];
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const SPEED = 36;
+    let rafId = 0;
+    let last = performance.now();
+
+    const tick = (now) => {
+      const dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      if (!pausedRef.current) {
+        const half = el.scrollWidth / 2;
+        if (half > 0) {
+          offsetRef.current -= SPEED * dt;
+          if (-offsetRef.current >= half) offsetRef.current += half;
+          el.style.transform = `translate3d(${offsetRef.current}px,0,0)`;
+        }
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
+
   return (
-    <div className="tsr-ticker">
-      <div className="ticker-track">
+    <div
+      className="tsr-ticker"
+      onMouseEnter={() => { pausedRef.current = true; }}
+      onMouseLeave={() => { pausedRef.current = false; }}
+    >
+      <div className="ticker-track" ref={trackRef}>
         {items.map((t, i) => (
           <span className="ticker-item" key={i}>
             <span className="t-name">{t.name}</span>
             <span className="t-val">{t.val}</span>
-            <span className={t.up ? "t-up" : "t-dn"}>{t.up ? "▲" : "▼"} {t.chg}</span>
+            <span className="t-learn">Learning</span>
           </span>
         ))}
       </div>
-    </div>
-  );
-}
-
-function CounterNum({ target }) {
-  const { val, ref } = useCounter(target);
-  return (
-    <div className="num-val" ref={ref}>
-      {target === 82 ? `${val}%` : target === 10 ? `${val}+` : `${val.toLocaleString()}+`}
     </div>
   );
 }
@@ -659,19 +652,16 @@ function NumbersBar() {
   return (
     <div className="numbers-bar">
       {[
-        { target: 5000, label: "Registered Users" },
-        { target: 10,   label: "Years in Market" },
-        { target: 500,  label: "Research Reports" },
+        { val: "Clarity", label: "Read research notes with more structure" },
+        { val: "Method", label: "See how analysis is prepared" },
+        { val: "Skill", label: "Study businesses before you decide" },
+        { val: "SEBI", label: "Registered research analyst" },
       ].map((n, i) => (
-        <div className={`num-block reveal d${i + 1}`} key={i}>
-          <CounterNum target={n.target} />
+        <div className={`num-block reveal d${i + 1}`} key={n.label}>
+          <div className="num-val" style={{ fontSize: "clamp(22px,3.2vw,36px)" }}>{n.val}</div>
           <div className="num-label">{n.label}</div>
         </div>
       ))}
-      <div className="num-block reveal d4">
-        <div className="num-val" style={{ fontSize: "clamp(24px,3.2vw,38px)" }}>SEBI</div>
-        <div className="num-label">Registered & Regulated</div>
-      </div>
     </div>
   );
 }
@@ -680,7 +670,7 @@ function BarChart() {
   const { ref, animated } = useBarAnimation();
   return (
     <div className="perf-card" ref={ref}>
-      <div className="perf-title">Research Coverage — Year-wise Activity</div>
+      <div className="perf-title">Illustrative study-note activity by year — not returns or performance</div>
       <div className="bars-wrap">
         {BARS.map((b, i) => (
           <div className="bar-col" key={i}>
@@ -693,7 +683,7 @@ function BarChart() {
           </div>
         ))}
       </div>
-      <p className="perf-footnote">*FY25 ongoing. Past research activity is not indicative of future performance. Investments are subject to market risks.</p>
+      <p className="perf-footnote">*FY25 ongoing. Bars are an illustrative picture of research-study activity for learning context only. They are not profit, CAGR, AUM or performance. Investments are subject to market risks.</p>
     </div>
   );
 }
@@ -742,8 +732,9 @@ function RegisterModal({ open, onClose }) {
         const data = await res.json().catch(() => ({}));
         throw new Error(data?.message || `Server error (${res.status})`);
       }
-      trackPixel("Lead");
-      trackPixel("CompleteRegistration");
+      if (typeof window.fbq === "function") {
+        window.fbq("track", "Lead");
+      }
       setSuccess(true);
     } catch (err) {
       setApiError(err.message || "Something went wrong. Please try again.");
@@ -758,9 +749,9 @@ function RegisterModal({ open, onClose }) {
         <button className="reg-modal-close" onClick={onClose} aria-label="Close">✕</button>
         {!success ? (
           <>
-            <div className="reg-modal-badge">Free Registration</div>
+            <div className="reg-modal-badge">Free Educational Session</div>
             <h2 className="reg-modal-h">Register with<br /><span>Trillion Stock Research</span></h2>
-            <p className="reg-modal-sub">SEBI Reg. No: INH000020129. Access research reports and market analysis. Investments are subject to market risks — please read all documents carefully before investing.</p>
+            <p className="reg-modal-sub">SEBI Reg. No: INH000020129. Join a free educational session to practise reading research: how notes are prepared, how risk is disclosed, and how to study markets with more method. Reports are for learning. Investments are subject to market risks — please read all documents carefully.</p>
             <form onSubmit={handleSubmit} noValidate>
               <div className="reg-field">
                 <label htmlFor="reg-name">Full Name</label>
@@ -785,18 +776,18 @@ function RegisterModal({ open, onClose }) {
               </button>
             </form>
             <div className="reg-modal-perks">
-              {[["✓","SEBI Reg. INH000020129"],["✓","Written Research Reports"],["⚠","Market Risk Applies"]].map(([icon,text]) => (
+              {[["✓","SEBI Reg. INH000020129"],["✓","Written study notes"],["⚠","Market risk applies"]].map(([icon,text]) => (
                 <div className="reg-modal-perk" key={text}><span>{icon}</span>{text}</div>
               ))}
             </div>
-            <p style={{fontSize:"11px",color:"var(--muted)",marginTop:"12px",lineHeight:"1.6"}}>By registering, you acknowledge that investments are subject to market risks. Research reports are for informational purposes only and do not constitute investment advice.</p>
+            <p style={{fontSize:"11px",color:"var(--muted)",marginTop:"12px",lineHeight:"1.6"}}>By registering, you acknowledge that this is educational research learning. Investments are subject to market risks. Research reports do not constitute investment advice and do not promise returns.</p>
           </>
         ) : (
           <div className="reg-success">
-            <div className="reg-success-congrats">Congratulations</div>
-            <h2 className="reg-success-h">Welcome, <span>{form.name.split(" ")[0]}</span>!<br />You're All Set.</h2>
+            <div className="reg-success-congrats">Registration received</div>
+            <h2 className="reg-success-h">Welcome, <span>{form.name.split(" ")[0]}</span>!<br />You're registered for learning.</h2>
             <p className="reg-success-sub">
-              Registration confirmed. Join our WhatsApp group for <strong>research updates &amp; market analysis</strong> from our SEBI-registered analysts (Reg. No: INH000020129). Investments are subject to market risks.
+              Join our WhatsApp group for <strong>research learning updates and study notes</strong> from our SEBI-registered analysts (Reg. No: INH000020129). Content is educational — to continue practising how research is read. Investments are subject to market risks.
             </p>
             <div className="reg-success-divider" />
             <div className="reg-wa-label">Next Step — Join the Community</div>
@@ -810,7 +801,7 @@ function RegisterModal({ open, onClose }) {
               <span className="reg-wa-icon">💬</span>
               <div className="reg-wa-text">
                 <span className="reg-wa-text-main">Join WhatsApp Group Now</span>
-                <span className="reg-wa-text-sub">Research Reports · Market Analysis · SEBI Compliant</span>
+                <span className="reg-wa-text-sub">Research Learning · Study Notes · SEBI Compliant</span>
               </div>
             </a>
             <p className="reg-wa-note">Tap above to open WhatsApp · +91 99269 09617</p>
@@ -896,7 +887,7 @@ export default function Landing() {
               <span className="h1-italic">SEBI Registered Research Analyst</span>
             </h1>
             <p className="hero-desc">
-              A SEBI-registered research analyst firm providing research-based analysis for equity, F&amp;O and portfolio segments. Investments are subject to market risks.
+              A SEBI-registered research analyst firm offering research-based learning on equity, derivatives concepts and portfolio study. You learn how a research note is structured, how businesses are studied, and how risk is explained — so your market reading becomes clearer. Our work is educational. Investments are subject to market risks.
             </p>
             <div className="hero-btns">
               <button className="btn-register" onClick={openModal}>Join Free Master Class</button>
@@ -954,8 +945,8 @@ export default function Landing() {
       <section id="services" className="tsr-section services-bg">
         <div className="services-header">
           <div className="reveal">
-            <div className="section-eyebrow">What We Offer</div>
-            <h2 className="section-h">Our Research.<br />Our Services.</h2>
+            <div className="section-eyebrow">What Learning Develops</div>
+            <h2 className="section-h">Our Research.<br />Your Learning.</h2>
           </div>
           <a href="https://www.trillionstockresearch.com" className="btn-outline reveal" target="_blank" rel="noreferrer">All Services ↗</a>
         </div>
@@ -979,7 +970,7 @@ export default function Landing() {
           <div className="reveal-left">
             <div className="section-eyebrow">Why Trillion Stock Research</div>
             <h2 className="section-h">Why Choose<br />Trillion Stock Research</h2>
-            <p className="section-sub">We provide research, transparency and accountability — not just recommendations. SEBI registered and fully compliant with all applicable regulations.</p>
+            <p className="section-sub">We provide research-based learning so you can read analysis with more method and notice risk in plain language — not profit claims. SEBI registered. Use our notes to study markets. Fully compliant with applicable regulations.</p>
             <div className="why-list">
               {WHY_ITEMS.map((w, i) => (
                 <div className={`why-item reveal d${i + 1}`} key={w.title}>
@@ -1003,8 +994,8 @@ export default function Landing() {
 
       <section id="reviews" className="tsr-section testi-bg">
         <div className="testi-head reveal">
-          <div className="section-eyebrow">Client Voices</div>
-          <h2 className="section-h">What Our<br />Clients Say</h2>
+          <div className="section-eyebrow">Learner Feedback</div>
+          <h2 className="section-h">What Learners<br />Say About Studying Research</h2>
         </div>
         <div className="testi-grid">
           {TESTIMONIALS.map((t, i) => (
@@ -1026,11 +1017,11 @@ export default function Landing() {
       </section>
 
       <section className="reg-strip">
-        <div className="reg-strip-badge">Free Registration Open</div>
-        <h2 className="reg-strip-h reveal">Register Today.<br /><span>Access Research Reports.</span></h2>
-        <p className="reg-strip-sub reveal">Access research reports from a SEBI-registered research analyst platform. Research-based stock analysis, portfolio review guidance and market reports. Investments are subject to market risks.</p>
+        <div className="reg-strip-badge">Free Educational Registration</div>
+        <h2 className="reg-strip-h reveal">Learn from Research.<br /><span>Study before you decide.</span></h2>
+        <p className="reg-strip-sub reveal">Join a free research master class to build research literacy: how SEBI-registered analysts prepare written study notes, how to follow stock analysis concepts, and how to read risk disclosures. For education. Investments are subject to market risks.</p>
         <div className="reg-strip-perks reveal">
-          {[["✓","SEBI Reg. INH000020129"],["✓","Written Research Reports"],["✓","Risk Disclosures Included"]].map(([icon,text]) => (
+          {[["✓","SEBI Reg. INH000020129"],["✓","Written study notes"],["✓","Risk disclosures included"]].map(([icon,text]) => (
             <div className="reg-strip-perk" key={text}><span>{icon}</span>{text}</div>
           ))}
         </div>
@@ -1041,8 +1032,8 @@ export default function Landing() {
       <section id="contact" className="cta-band">
         <div className="cta-inner">
           <div className="reveal-left">
-            <div className="cta-h">Register Today<br /><span>& Access Research</span></div>
-            <p className="cta-p">Sign up for free and access research-backed reports and market analysis directly from our SEBI-registered research analysts.</p>
+            <div className="cta-h">Learn from Research<br /><span>Join the free master class</span></div>
+            <p className="cta-p">Register at no cost for an educational session. Practise reading research-backed notes so you can follow analysis with more clarity — to learn, not to chase returns.</p>
           </div>
           <div className="cta-right reveal-right">
             <button className="btn-register" onClick={openModal}>Join Free Master Class</button>
@@ -1057,7 +1048,7 @@ export default function Landing() {
           <div className="reveal">
             <div className="footer-logo-main">Trillion <span>Stock</span> Research</div>
             <div className="footer-logo-sub">SEBI Registered Research Analyst</div>
-            <p className="footer-about">SEBI-registered research analyst firm providing market research, investment analysis and research-backed Research Analyst services for investors.</p>
+            <p className="footer-about">SEBI-registered research analyst firm providing market education, research-based learning and documented analysis so learners can study markets with greater clarity, method and risk awareness.</p>
             <div className="footer-reg"><span style={{background:"#fff",padding:"1px 4px",display:"inline-flex",alignItems:"center"}}><img src="/sebi-small.png" alt="SEBI" style={{height:"13px",width:"auto",objectFit:"contain",display:"block"}} /></span> SEBI Reg. No: INH000020129</div>
             <div className="footer-reg" style={{marginTop:"6px"}}><span style={{background:"#fff",padding:"1px 4px",display:"inline-flex",alignItems:"center"}}><img src="/bselogo.png" alt="BSE" style={{height:"13px",width:"auto",objectFit:"contain",display:"block"}} /></span> BSE Enlistment No: 6528</div>
             <div className="footer-reg" style={{marginTop:"6px",fontSize:"10px"}}><span style={{background:"#fff",padding:"1px 4px",display:"inline-flex",alignItems:"center"}}><img src="/bselogo.png" alt="BSE" style={{height:"12px",width:"auto",objectFit:"contain",display:"block"}} /></span> Ad Approval: BSE/RA/ADVT/05012026-6528/03</div>
@@ -1065,7 +1056,7 @@ export default function Landing() {
           </div>
           <div className="footer-col reveal d1">
             <div className="footer-col-title">Services</div>
-            {["Equity Research","Intraday research","Portfolio Research Analyst","F&O Research Analyst","Multibagger Research"].map(s => (
+            {["Equity Research Learning","Intraday Study Notes","Portfolio Study for Learning","F&O Research Education","Long-term Research Learning"].map(s => (
               <a key={s} href="https://www.trillionstockresearch.com" target="_blank" rel="noreferrer">{s}</a>
             ))}
           </div>
@@ -1132,8 +1123,8 @@ export default function Landing() {
       <div className="offer-bar-wrap">
         <div className="offer-bar">
           <div className="offer-bar-left">
-            <div className="offer-price">Free Registration</div>
-            <div className="offer-timer">SEBI Reg. INH000020129 · BSE: 6528</div>
+            <div className="offer-price">Free research learning session</div>
+            <div className="offer-timer">Build study skills · SEBI INH000020129 · BSE: 6528</div>
           </div>
           <div className="offer-bar-mid">
             Investments are subject to market risks. Read all documents carefully.
