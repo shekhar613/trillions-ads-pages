@@ -326,6 +326,10 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
 .cta-h { font-family:var(--serif); font-size:clamp(28px,4vw,48px); font-weight:500; line-height:1.12; margin-bottom:12px; color:var(--navy); }
 .cta-h span { color:var(--gold); font-style:italic; }
 .cta-p { font-size:16px; color:var(--muted); max-width:520px; line-height:1.7; }
+.cta-support { margin-top:16px; }
+.cta-support-label { display:block; font-size:11px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
+.cta-support a { font-size:18px; font-weight:600; color:var(--navy); text-decoration:none; letter-spacing:.2px; }
+.cta-support a:hover { color:var(--gold); }
 .cta-right { display:flex; flex-direction:column; gap:12px; align-items:flex-end; }
 .cta-note { font-size:12px; color:var(--muted); text-align:right; letter-spacing:.3px; }
 
@@ -1034,6 +1038,10 @@ export default function Landing() {
           <div className="reveal-left">
             <div className="cta-h">Learn from Research<br /><span>Join the free master class</span></div>
             <p className="cta-p">Register at no cost for an educational session. Practise reading research-backed notes so you can follow analysis with more clarity — to learn, not to chase returns.</p>
+            <p className="cta-support">
+              <span className="cta-support-label">Contact Support</span>
+              <a href="tel:+919977555378">+91 99775 55378</a>
+            </p>
           </div>
           <div className="cta-right reveal-right">
             <button className="btn-register" onClick={openModal}>Join Free Master Class</button>
@@ -1068,6 +1076,7 @@ export default function Landing() {
           </div>
           <div className="footer-col reveal d3">
             <div className="footer-col-title">Contact & Social</div>
+            <a href="tel:+919977555378">Contact Support · +91 99775 55378</a>
             <a href="https://www.trillionstockresearch.com" target="_blank" rel="noreferrer">trillionstockresearch.com</a>
             <a href="mailto:info@trillionstockresearch.com">info@trillionstockresearch.com</a>
             <a href="#">Madhya Pradesh, India</a>
