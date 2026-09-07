@@ -330,6 +330,9 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
 .cta-support-label { display:block; font-size:11px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
 .cta-support a { font-size:18px; font-weight:600; color:var(--navy); text-decoration:none; letter-spacing:.2px; }
 .cta-support a:hover { color:var(--gold); }
+.cta-address { margin-top:14px; max-width:420px; }
+.cta-address a { display:inline-block; font-size:14px; font-weight:500; color:var(--navy); text-decoration:none; line-height:1.55; }
+.cta-address a:hover { color:var(--gold); }
 .cta-right { display:flex; flex-direction:column; gap:12px; align-items:flex-end; }
 .cta-note { font-size:12px; color:var(--muted); text-align:right; letter-spacing:.3px; }
 
@@ -342,7 +345,7 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
 .footer-about { font-size:13px; color:rgba(255,255,255,.55); line-height:1.75; }
 .footer-reg { display:inline-flex; align-items:center; gap:8px; margin-top:12px; font-size:11px; color:var(--gold-2); background:rgba(184,146,74,.08); border:1px solid rgba(184,146,74,.22); padding:6px 10px; max-width:100%; flex-wrap:wrap; word-break:break-word; }
 .footer-col-title { font-size:11px; font-weight:600; letter-spacing:1.8px; text-transform:uppercase; color:var(--gold-2); margin-bottom:16px; }
-.footer-col a { display:block; font-size:13px; color:rgba(255,255,255,.55); text-decoration:none; margin-bottom:11px; transition:color .2s; }
+.footer-col a { display:block; font-size:13px; color:rgba(255,255,255,.55); text-decoration:none; margin-bottom:11px; transition:color .2s; line-height:1.55; }
 .footer-col a:hover { color:#fff; }
 .footer-disclaimer { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-left:3px solid var(--gold); padding:18px 20px; margin:0 auto 28px; font-size:12px; color:rgba(255,255,255,.5); line-height:1.8; max-width:var(--max); }
 .footer-disclaimer strong { color:rgba(255,255,255,.82); }
@@ -354,6 +357,8 @@ button, a, input { -webkit-tap-highlight-color: transparent; touch-action: manip
 .footer-cert-badge strong { color:#fff; font-weight:600; display:block; margin-bottom:1px; }
 .footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-top:20px; border-top:1px solid rgba(255,255,255,.08); max-width:var(--max); margin:0 auto; }
 .footer-bottom p { font-size:12px; color:rgba(255,255,255,.38); }
+.footer-bottom p a { color:var(--gold-2); text-decoration:none; }
+.footer-bottom p a:hover { color:#fff; }
 .footer-social { display:flex; gap:10px; align-items:center; }
 .footer-social-link { display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:500; color:rgba(255,255,255,.55); text-decoration:none; padding:6px 12px; border:1px solid rgba(255,255,255,.1); transition:all .2s; }
 .footer-social-link:hover { color:#fff; border-color:rgba(255,255,255,.25); }
@@ -1042,6 +1047,12 @@ export default function Landing() {
               <span className="cta-support-label">Contact Support</span>
               <a href="tel:+919977555378">+91 99775 55378</a>
             </p>
+            <p className="cta-address">
+              <span className="cta-support-label">Office Address</span>
+              <a href="https://www.google.com/maps/search/?api=1&query=200+Sector+A+Suryadev+Nagar,+Indore,+Madhya+Pradesh,+452012" target="_blank" rel="noreferrer">
+                200 Sector A Suryadev Nagar, Indore, Madhya Pradesh, 452012
+              </a>
+            </p>
           </div>
           <div className="cta-right reveal-right">
             <button className="btn-register" onClick={openModal}>Join Free Master Class</button>
@@ -1073,13 +1084,15 @@ export default function Landing() {
             {["About Us","Research Reports","Blog","Careers"].map(s => (
               <a key={s} href="https://www.trillionstockresearch.com" target="_blank" rel="noreferrer">{s}</a>
             ))}
+            <a href="/terms">Terms & Conditions</a>
+            <a href="/policy">Policy</a>
           </div>
           <div className="footer-col reveal d3">
             <div className="footer-col-title">Contact & Social</div>
             <a href="tel:+919977555378">Contact Support · +91 99775 55378</a>
             <a href="https://www.trillionstockresearch.com" target="_blank" rel="noreferrer">trillionstockresearch.com</a>
             <a href="mailto:info@trillionstockresearch.com">info@trillionstockresearch.com</a>
-            <a href="#">Madhya Pradesh, India</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=200+Sector+A+Suryadev+Nagar,+Indore,+Madhya+Pradesh,+452012" target="_blank" rel="noreferrer">200 Sector A Suryadev Nagar, Indore, Madhya Pradesh, 452012</a>
             <a href="https://www.instagram.com/trillions_stock_research_?igsh=Y3NmandlNGdwdTM%3D&utm_source=qr" target="_blank" rel="noreferrer" style={{display:"flex",alignItems:"center",gap:"7px"}}>
               <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
               Instagram
@@ -1115,7 +1128,7 @@ export default function Landing() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2025 Trillion Stock Research. All rights reserved.</p>
+          <p>© 2025 Trillion Stock Research. All rights reserved. · <a href="/terms">Terms & Conditions</a> · <a href="/policy">Policy</a></p>
           <div className="footer-social">
             <a href="https://www.instagram.com/trillions_stock_research_?igsh=Y3NmandlNGdwdTM%3D&utm_source=qr" className="footer-social-link insta" target="_blank" rel="noreferrer">
               <span className="social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></span>
