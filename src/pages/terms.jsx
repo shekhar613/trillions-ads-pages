@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import UserCount from "../components/UserCount.jsx";
 
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&display=swap');
@@ -104,6 +105,7 @@ body {
 .tn-footer a { color:var(--gold-2); text-decoration:none; }
 .tn-footer a:hover { color:#fff; }
 .tn-footer-meta { margin-top:14px; font-size:12px; color:rgba(255,255,255,.4); }
+.footer-user-count { display:block; margin-top:10px; font-size:12px; color:rgba(255,255,255,.38); font-variant-numeric:tabular-nums; }
 `;
 
 const SECTIONS = [
@@ -230,6 +232,7 @@ export default function Terms() {
             200 Sector A Suryadev Nagar, Indore, Madhya Pradesh, 452012
           </p>
           <p className="tn-footer-meta">© 2026 Trillion Stock Research. All rights reserved.</p>
+          <UserCount />
         </div>
       </footer>
     </>
